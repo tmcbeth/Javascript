@@ -15,13 +15,39 @@ submit.on("click", function () {
     d3.event.preventDefault();
 
     var inputElement = d3.select("#datetime");
+    var inputCity = d3.select("#city");
+    var inputState = d3.select("#state");
+    var inputCountry = d3.select("#country");
+    var inputShape = d3.select("#shape");
 
     var inputValue = inputElement.property("value");
+    var cityValue = inputCity.property("value");
+    var stateValue = inputState.property("value");
+    var countryValue = inputCountry.property("value");
+    var shapeValue = inputShape.property("value");
 
     console.log(inputValue);
     console.log(data);
 
-    var filteredData = data.filter(date => date.datetime === inputValue);
+    // var filteredData = data.filter(date => date.datetime === inputValue);
+
+    var filter = {
+        datetime: inputValue,
+        city: cityValue,
+        state: stateValue,
+        country: countryValue,
+        shape: shapeValue
+    }
+
+    filteredData = data.filter(function(item) {
+        
+        for (var key in filter) {
+            if (item[key] === undefined || item[key] != filter[key])
+                return false;
+            
+        }
+        return true;
+      });
 
     console.log(filteredData);
     
